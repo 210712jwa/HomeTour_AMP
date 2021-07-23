@@ -6,5 +6,8 @@ public class Player {
 	
 	Room currentRoom;
 	
+	public void setCurrentRoom() {
+		this.currentRoom = currentRoom;
+	}
 	
 }

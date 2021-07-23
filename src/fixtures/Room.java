@@ -23,28 +23,33 @@ public class Room extends Fixture {
 		return this.exits;
 	}
 	
+	
+	public void inspectRoom() {
+		System.out.println(this.longDescription);
+	}
 
 	public Room getExit(String direction) {
 		
 		Room select = null;
 		
-		if (direction == "north") {
+		if (direction.equals("north")) {
 			select = this.getNorth();
 		}
 			
-		else if (direction == "south") {
+		else if (direction.equals("south")) {
 			select = this.getSouth();
 		}
 		
-		else if (direction == "west") {
+		else if (direction.equals("west")) {
 			select =this.getWest();
 		}
 		
-		else if (direction == "east") {
+		else if (direction.equals("east")) {
 			select = this.getEast();
 		}
 		
-		if(select == null) {
+		if(select.equals(null)) {
+			select = this.getWall();
 			System.out.println("There is a wall here. You can't move in this direction.");
 		}
 		
@@ -68,6 +73,10 @@ public class Room extends Fixture {
 	
 	public Room getEast() {
 		return this.east;
+	}
+	
+	public Room getWall() {
+		return this;
 	}
 	
 	

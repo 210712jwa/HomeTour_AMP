@@ -2,13 +2,16 @@ package game;
 
 import java.util.Scanner;
 
+import game.RoomManager;
 import fixtures.Room;
 
 public class Main {
+	
+	static RoomManager house = new RoomManager();
+	static Player player = new Player();
 	public static void main(String[] args) {
-		RoomManager house = new RoomManager();
-		house = house.init();
-		Player player = new Player();
+		
+		house.init();
 		//System.out.println(house.startingRoom.getName());
 		player.currentRoom = house.startingRoom;
 		
@@ -21,19 +24,32 @@ public class Main {
 		printRoom(player); //establishes the player in the first room: the foyer.
 		
 		System.out.println("\nWhat do you want to do?\n");
-		
+		Room temp = player.currentRoom;
 		while (player.currentRoom != null) {
 			
+
 			String[] command = collectInput();
-			System.out.println(command[0]);
-			parse(command, player);
+			
+			if (temp.name.equals("The Foyer") & command[1].equals("south"))
+			{
+				System.out.println("Now exiting the house. goodbye!");
+				break;
+			}
+			
+			else {
+				temp = player.currentRoom;
+				parse(command, player);
+			}
+			//System.out.println(command[0]);
+			
 
 		}
 		
 	}
 	
 	public static void printRoom(Player player) {
-		System.out.println(player.currentRoom.longDescription);
+		System.out.println(player.currentRoom.name);
+		System.out.println(player.currentRoom.shortDescription);
 	}
 	
 	public static String[] collectInput() {
@@ -53,13 +69,15 @@ public class Main {
 		action = action.toLowerCase();
 		
 		
-		if (action == "go") {
+		if (action.equals("go")) {
+			System.out.println("\n");
 			player.currentRoom = player.currentRoom.getExit(subject);
+			printRoom(player);
 		}
 		
-//		else if (action == "inspect") {
-//			
-//		}
+		else if (action.equals("inspect")) {
+			player.currentRoom.inspectRoom();
+		}
 		
 		else {
 			System.out.println("Invalid command. Try again.");
